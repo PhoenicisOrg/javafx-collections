@@ -24,13 +24,14 @@
     <artifactId>javafx-collections</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
+    <name>Additional JavaFX collections library</name>
+
     <properties>
         <slf4j.version>1.7.25</slf4j.version>
         <logback.version>1.2.3</logback.version>
         <guava.version>27.0.1-jre</guava.version>
         <junit.version>4.12</junit.version>
         <openjfx.version>11.0.1</openjfx.version>
-        <testfx.version>4.0.15-alpha</testfx.version>
     </properties>
 
     <dependencies>
@@ -50,32 +51,14 @@
             <version>${guava.version}</version>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testfx</groupId>
-            <artifactId>testfx-core</artifactId>
-            <version>${testfx.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testfx</groupId>
-            <artifactId>testfx-junit</artifactId>
-            <version>${testfx.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-base</artifactId>
             <version>${openjfx.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.testfx</groupId>
-            <artifactId>openjfx-monocle</artifactId>
-            <version>jdk-11+23</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
