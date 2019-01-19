@@ -25,11 +25,11 @@ The `ConcatenatedList<A>` concatenates multiple `ObservableList<A>` into a singl
 
 To make it easier to create a `ConcatenatedList<A>` for different use case scenarios, the `ConcatenatedList<A>` class provides a number of support `create` functions:  
 
-- `createPrefixList(ObservableList<? extends A>, A...)`
-- `createSuffixList(ObservableList<? extends A>, A...)`
-- `create(ObservableList<? extends A>...)`
-- `create(List<? extends A>...)`
-- `create(ObservableList<? extends List<? extends A>> list)`
+  - `createPrefixList(ObservableList<? extends A>, A...)`
+  - `createSuffixList(ObservableList<? extends A>, A...)`
+  - `create(ObservableList<? extends A>...)`
+  - `create(List<? extends A>...)`
+  - `create(ObservableList<? extends List<? extends A>> list)`
 
 ### Examples
 A `ConcatenatedList<String>` concatenating three `ObservableList`s:
