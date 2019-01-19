@@ -1,6 +1,7 @@
 package org.phoenicis.javafx.collections;
 
 import javafx.collections.ListChangeListener;
+import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.TransformationList;
 
@@ -59,6 +60,16 @@ public abstract class TransformationListBase<E, F> extends TransformationList<E,
                 addRemove(change);
             }
         }
+        endChange();
+    }
+
+    /**
+     * Fires a {@link Change} event containing all elements inside this {@link TransformationList}.
+     * This method should be used directly after the {@link TransformationList} has been initialized
+     */
+    protected void fireInitialisationChange() {
+        beginChange();
+        nextAdd(0, size());
         endChange();
     }
 }

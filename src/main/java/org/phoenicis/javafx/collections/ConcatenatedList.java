@@ -4,7 +4,6 @@ import com.google.common.collect.ImmutableList;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import org.phoenicis.javafx.collections.change.InitialisationChange;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -40,7 +39,7 @@ public class ConcatenatedList<E> extends TransformationListBase<E, ObservableLis
         this.expandedValues = source.stream().map(ArrayList::new).collect(Collectors.toList());
 
         source.forEach(this::addUpdateListener);
-        fireChange(new InitialisationChange<>(0, size(), this));
+        fireInitialisationChange();
     }
 
     /**

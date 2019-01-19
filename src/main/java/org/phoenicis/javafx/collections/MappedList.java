@@ -4,7 +4,6 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ListChangeListener.Change;
 import javafx.collections.ObservableList;
-import org.phoenicis.javafx.collections.change.InitialisationChange;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +70,7 @@ public class MappedList<E, F> extends TransformationListBase<E, F> {
         });
 
         // fire an initialisation event containing all mapped elements
-        fireChange(new InitialisationChange<>(0, size(), this));
+        fireInitialisationChange();
     }
 
     /**
