@@ -21,7 +21,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.phoenicis</groupId>
-    <artifactId>javafx-collections</artifactId>
+    <artifactId>phoenicis-javafx-collections</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
     <name>Additional JavaFX collections library</name>
