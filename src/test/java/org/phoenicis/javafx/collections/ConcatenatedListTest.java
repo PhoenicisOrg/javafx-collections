@@ -204,7 +204,33 @@ public class ConcatenatedListTest {
     }
 
     @Test
-    public void testInnerListRemove1() {
+    public void testInnerListAddWithEqualInnerLists() {
+        ObservableList<String> list1 = FXCollections.observableArrayList("11");
+        ObservableList<String> list2 = FXCollections.observableArrayList("41");
+        ObservableList<String> list3 = FXCollections.observableArrayList("31");
+        ObservableList<String> list4 = FXCollections.observableArrayList();
+
+        ObservableList<ObservableList<String>> observableList = FXCollections
+                .observableArrayList(ImmutableList.<ObservableList<String>>builder()
+                        .add(list1).add(list2).add(list3).add(list4).build());
+        ConcatenatedList<String> mappedList = new ConcatenatedList<>(observableList);
+
+        List<String> actual = new ArrayList<>();
+
+        Bindings.bindContent(actual, mappedList);
+
+        assertEquals(Arrays.asList("11", "41", "31"), mappedList);
+        assertEquals(Arrays.asList("11", "41", "31"), actual);
+
+        // list2 and list4 are equal after the add operation
+        list4.add("41");
+
+        assertEquals(Arrays.asList("11", "41", "31", "41"), mappedList);
+        assertEquals(Arrays.asList("11", "41", "31", "41"), actual);
+    }
+
+    @Test
+    public void testInnerListRemove() {
         ObservableList<String> list1 = FXCollections.observableArrayList("11");
         ObservableList<String> list2 = FXCollections.observableArrayList("21", "22");
         ObservableList<String> list3 = FXCollections.observableArrayList("31");
@@ -228,7 +254,7 @@ public class ConcatenatedListTest {
     }
 
     @Test
-    public void testInnerListRemove2() {
+    public void testInnerListRemoveWithEqualInnerLists() {
         ObservableList<String> list1 = FXCollections.observableArrayList("11");
         ObservableList<String> list2 = FXCollections.observableArrayList();
         ObservableList<String> list3 = FXCollections.observableArrayList("31");
@@ -246,6 +272,7 @@ public class ConcatenatedListTest {
         assertEquals(Arrays.asList("11", "31", "41"), mappedList);
         assertEquals(Arrays.asList("11", "31", "41"), actual);
 
+        // list2 and list4 are equal after the clear operation
         list4.clear();
 
         assertEquals(Arrays.asList("11", "31"), mappedList);
