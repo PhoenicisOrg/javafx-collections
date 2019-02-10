@@ -204,7 +204,7 @@ public class ConcatenatedListTest {
     }
 
     @Test
-    public void testInnerListRemove() {
+    public void testInnerListRemove1() {
         ObservableList<String> list1 = FXCollections.observableArrayList("11");
         ObservableList<String> list2 = FXCollections.observableArrayList("21", "22");
         ObservableList<String> list3 = FXCollections.observableArrayList("31");
@@ -225,6 +225,31 @@ public class ConcatenatedListTest {
 
         assertEquals(Arrays.asList("11", "22", "31"), mappedList);
         assertEquals(Arrays.asList("11", "22", "31"), actual);
+    }
+
+    @Test
+    public void testInnerListRemove2() {
+        ObservableList<String> list1 = FXCollections.observableArrayList("11");
+        ObservableList<String> list2 = FXCollections.observableArrayList();
+        ObservableList<String> list3 = FXCollections.observableArrayList("31");
+        ObservableList<String> list4 = FXCollections.observableArrayList("41");
+
+        ObservableList<ObservableList<String>> observableList = FXCollections
+                .observableArrayList(ImmutableList.<ObservableList<String>>builder()
+                        .add(list1).add(list2).add(list3).add(list4).build());
+        ConcatenatedList<String> mappedList = new ConcatenatedList<>(observableList);
+
+        List<String> actual = new ArrayList<>();
+
+        Bindings.bindContent(actual, mappedList);
+
+        assertEquals(Arrays.asList("11", "31", "41"), mappedList);
+        assertEquals(Arrays.asList("11", "31", "41"), actual);
+
+        list4.clear();
+
+        assertEquals(Arrays.asList("11", "31"), mappedList);
+        assertEquals(Arrays.asList("11", "31"), actual);
     }
 
     @Test
