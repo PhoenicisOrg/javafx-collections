@@ -38,7 +38,12 @@ public class ConcatenatedList<E> extends TransformationListBase<E, ObservableLis
         this.innerListeners = new HashMap<>();
         this.expandedValues = source.stream().map(ArrayList::new).collect(Collectors.toList());
 
-        source.forEach(this::addUpdateListener);
+        for (int innerListIndex = 0; innerListIndex < source.size(); innerListIndex++) {
+            final ObservableList<? extends E> innerList = getSource().get(innerListIndex);
+
+            addUpdateListener(innerList, innerListIndex);
+        }
+
         fireInitialisationChange();
     }
 
@@ -269,7 +274,7 @@ public class ConcatenatedList<E> extends TransformationListBase<E, ObservableLis
             expandedValues.set(i, new ArrayList<>(newValues));
 
             // add an update listener to the new observable list
-            addUpdateListener(newValues);
+            addUpdateListener(newValues, i);
 
             final int firstOldIndex = getFirstIndex(i);
 
@@ -328,7 +333,7 @@ public class ConcatenatedList<E> extends TransformationListBase<E, ObservableLis
             expandedValues.add(index, new ArrayList<>(newValues));
 
             // add an update listener to the new observable list
-            addUpdateListener(newValues);
+            addUpdateListener(newValues, addedIndex);
 
             final int lastOldIndex = getLastIndexPlusOne(index - 1);
 
@@ -340,19 +345,18 @@ public class ConcatenatedList<E> extends TransformationListBase<E, ObservableLis
      * Adds a {@link ListChangeListener} to the given {@link ObservableList innerList}.
      * This {@link ListChangeListener} listens to changes made to the given list.
      *
-     * @param innerList The {@link ObservableList} to which the {@link ListChangeListener} is added
+     * @param innerList      The {@link ObservableList} to which the {@link ListChangeListener} is added
+     * @param innerListIndex The index of <code>innerList</code>
      */
-    private void addUpdateListener(final ObservableList<? extends E> innerList) {
+    private void addUpdateListener(final ObservableList<? extends E> innerList, final int innerListIndex) {
         final ListChangeListener<E> innerListener = (ListChangeListener.Change<? extends E> change) -> {
             final ObservableList<? extends E> activatorList = change.getList();
 
             beginChange();
             while (change.next()) {
-                final int activatorListIndex = getSource().indexOf(innerList);
+                expandedValues.set(innerListIndex, new ArrayList<>(activatorList));
 
-                expandedValues.set(activatorListIndex, new ArrayList<>(activatorList));
-
-                final int expandedFrom = getFirstIndex(activatorListIndex);
+                final int expandedFrom = getFirstIndex(innerListIndex);
 
                 if (change.wasPermutated()) {
                     nextPermutation(expandedFrom + change.getFrom(), expandedFrom + change.getTo(),
