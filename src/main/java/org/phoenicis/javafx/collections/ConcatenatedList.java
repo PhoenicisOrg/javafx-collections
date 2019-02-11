@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.WeakListChangeListener;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -372,9 +373,12 @@ public class ConcatenatedList<E> extends TransformationListBase<E, ObservableLis
             endChange();
         };
 
-        innerListeners.put(innerList, innerListener);
+        // wrap the inner listener in a weak listener to ensure a better memory management
+        final WeakListChangeListener<E> weakInnerListener = new WeakListChangeListener<>(innerListener);
 
-        innerList.addListener(innerListener);
+        innerListeners.put(innerList, weakInnerListener);
+
+        innerList.addListener(weakInnerListener);
     }
 
     /**
