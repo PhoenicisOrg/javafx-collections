@@ -105,12 +105,9 @@ public class MappedList<E, F> extends TransformationListBase<E, F> {
     }
 
     /**
-     * Finds the index of the first element in the source list at the given index position
-     *
-     * @param index The index in the source list
-     * @return The index of the first element of the source index in this list
-     * @apiNote This method is required to make Phoenicis compile with Java 9
+     * {@inheritDoc}
      */
+    @Override
     public int getViewIndex(int index) {
         if (index >= size()) {
             throw new IndexOutOfBoundsException();
