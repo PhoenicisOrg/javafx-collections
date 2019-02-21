@@ -5,7 +5,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -20,7 +22,7 @@ public class ConcatenatedList<E> extends TransformationListBase<E, ObservableLis
      * A map linking the created {@link ListChangeListener} instances to their corresponding {@link ObservableList}.
      * This map is required to allow for the removal of the listener when an {@link ObservableList} is removed
      */
-    private final Map<ObservableList<? extends E>, ListChangeListener<E>> innerListeners;
+    private final List<ListChangeListener<E>> innerListeners;
 
     /**
      * An internal copy of the source list of lists
@@ -35,7 +37,7 @@ public class ConcatenatedList<E> extends TransformationListBase<E, ObservableLis
     public ConcatenatedList(ObservableList<? extends ObservableList<? extends E>> source) {
         super(source);
 
-        this.innerListeners = new HashMap<>();
+        this.innerListeners = new ArrayList<>();
         this.expandedValues = source.stream().map(ArrayList::new).collect(Collectors.toList());
 
         for (int innerListIndex = 0; innerListIndex < source.size(); innerListIndex++) {
@@ -267,7 +269,7 @@ public class ConcatenatedList<E> extends TransformationListBase<E, ObservableLis
             final ObservableList<? extends E> oldValues = change.getRemoved().get(i - from);
 
             // remove the update listener form the old observable list
-            removeUpdateListener(oldValues);
+            removeUpdateListener(oldValues, i);
 
             final ObservableList<? extends E> newValues = change.getAddedSubList().get(i - from);
 
@@ -318,7 +320,7 @@ public class ConcatenatedList<E> extends TransformationListBase<E, ObservableLis
             final ObservableList<? extends E> oldValues = change.getRemoved().get(removedIndex);
 
             // remove the update listener form the old observable list
-            removeUpdateListener(oldValues);
+            removeUpdateListener(oldValues, removedIndex);
 
             final int firstOldIndex = getFirstIndex(index);
 
@@ -372,7 +374,7 @@ public class ConcatenatedList<E> extends TransformationListBase<E, ObservableLis
             endChange();
         };
 
-        innerListeners.put(innerList, innerListener);
+        innerListeners.add(innerListIndex, innerListener);
 
         innerList.addListener(innerListener);
     }
@@ -382,11 +384,9 @@ public class ConcatenatedList<E> extends TransformationListBase<E, ObservableLis
      *
      * @param innerList The {@link ObservableList} from which the {@link ListChangeListener} should be removed
      */
-    private void removeUpdateListener(final ObservableList<? extends E> innerList) {
-        final ListChangeListener<E> innerListener = innerListeners.get(innerList);
+    private void removeUpdateListener(final ObservableList<? extends E> innerList, final int innerListIndex) {
+        final ListChangeListener<E> innerListener = innerListeners.remove(innerListIndex);
 
         innerList.removeListener(innerListener);
-
-        innerListeners.remove(innerList);
     }
 }
