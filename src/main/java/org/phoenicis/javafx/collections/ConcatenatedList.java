@@ -1,6 +1,5 @@
 package org.phoenicis.javafx.collections;
 
-import com.google.common.collect.ImmutableList;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -62,9 +61,7 @@ public class ConcatenatedList<E> extends TransformationListBase<E, ObservableLis
     @SafeVarargs
     public static <F> ConcatenatedList<F> createPrefixList(ObservableList<? extends F> list, F... prefixes) {
         return new ConcatenatedList<>(FXCollections.observableArrayList(
-                ImmutableList.<ObservableList<? extends F>>builder()
-                        .add(FXCollections.observableArrayList(prefixes))
-                        .add(list).build()));
+                List.of(FXCollections.observableArrayList(prefixes), list)));
     }
 
     /**
@@ -80,9 +77,7 @@ public class ConcatenatedList<E> extends TransformationListBase<E, ObservableLis
     @SafeVarargs
     public static <F> ConcatenatedList<F> createSuffixList(ObservableList<? extends F> list, F... suffixes) {
         return new ConcatenatedList<>(FXCollections.observableArrayList(
-                ImmutableList.<ObservableList<? extends F>>builder()
-                        .add(list)
-                        .add(FXCollections.observableArrayList(suffixes)).build()));
+                List.of(list, FXCollections.observableArrayList(suffixes))));
     }
 
     /**
