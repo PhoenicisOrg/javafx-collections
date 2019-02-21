@@ -19,8 +19,8 @@ import java.util.stream.IntStream;
  */
 public class ConcatenatedList<E> extends TransformationListBase<E, ObservableList<? extends E>> {
     /**
-     * A map linking the created {@link ListChangeListener} instances to their corresponding {@link ObservableList}.
-     * This map is required to allow for the removal of the listener when an {@link ObservableList} is removed
+     * A list containing the created {@link ListChangeListener} instances for the {@link ObservableList}s in the source list.
+     * This list is required to allow for the removal of a listener when an {@link ObservableList} is removed
      */
     private final List<ListChangeListener<E>> innerListeners;
 
@@ -382,7 +382,8 @@ public class ConcatenatedList<E> extends TransformationListBase<E, ObservableLis
     /**
      * Removes the {@link ListChangeListener} from the given {@link ObservableList innerList}
      *
-     * @param innerList The {@link ObservableList} from which the {@link ListChangeListener} should be removed
+     * @param innerList      The {@link ObservableList} from which the {@link ListChangeListener} should be removed
+     * @param innerListIndex The index of the to be removed {@link ObservableList innerList}
      */
     private void removeUpdateListener(final ObservableList<? extends E> innerList, final int innerListIndex) {
         final ListChangeListener<E> innerListener = innerListeners.remove(innerListIndex);
