@@ -47,6 +47,27 @@ public class ConcatenatedListTest {
     }
 
     @Test
+    public void testListAddDuplicate() {
+        ObservableList<ObservableList<String>> observableList = FXCollections
+                .observableArrayList(ImmutableList.<ObservableList<String>>builder()
+                        .add(FXCollections.observableArrayList("11"))
+                        .add(FXCollections.observableArrayList("21", "22"))
+                        .add(FXCollections.observableArrayList()).build());
+        ConcatenatedList<String> mappedList = new ConcatenatedList<>(observableList);
+        List<String> actual = new ArrayList<>();
+
+        Bindings.bindContent(actual, mappedList);
+
+        assertEquals(Arrays.asList("11", "21", "22"), mappedList);
+        assertEquals(Arrays.asList("11", "21", "22"), actual);
+
+        observableList.add(0, FXCollections.observableArrayList("21", "22"));
+
+        assertEquals(Arrays.asList("21", "22", "11", "21", "22"), mappedList);
+        assertEquals(Arrays.asList("21", "22", "11", "21", "22"), actual);
+    }
+
+    @Test
     public void testListRemoveFirstList() {
         ObservableList<ObservableList<String>> observableList = FXCollections
                 .observableArrayList(ImmutableList.<ObservableList<String>>builder()
@@ -107,6 +128,32 @@ public class ConcatenatedListTest {
 
         assertEquals(Arrays.asList("11", "21", "22"), mappedList);
         assertEquals(Arrays.asList("11", "21", "22"), actual);
+    }
+
+    @Test
+    public void testListRemoveDuplicateList() {
+        ObservableList<ObservableList<String>> observableList = FXCollections
+                .observableArrayList(ImmutableList.<ObservableList<String>>builder()
+                        .add(FXCollections.observableArrayList("11"))
+                        .add(FXCollections.observableArrayList("21", "22"))
+                        .add(FXCollections.observableArrayList("11")).build());
+        ConcatenatedList<String> mappedList = new ConcatenatedList<>(observableList);
+        List<String> actual = new ArrayList<>();
+
+        Bindings.bindContent(actual, mappedList);
+
+        assertEquals(Arrays.asList("11", "21", "22", "11"), mappedList);
+        assertEquals(Arrays.asList("11", "21", "22", "11"), actual);
+
+        observableList.remove(2);
+
+        assertEquals(Arrays.asList("11", "21", "22"), mappedList);
+        assertEquals(Arrays.asList("11", "21", "22"), actual);
+
+        observableList.remove(0);
+
+        assertEquals(Arrays.asList("21", "22"), mappedList);
+        assertEquals(Arrays.asList("21", "22"), actual);
     }
 
     @Test
