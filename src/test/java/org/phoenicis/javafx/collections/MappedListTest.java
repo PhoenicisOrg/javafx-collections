@@ -16,10 +16,10 @@ import static org.junit.Assert.assertEquals;
 public class MappedListTest {
     @Test
     public void testListCreation() {
-        ObservableList<Integer> observableList = FXCollections.observableArrayList(List.of(3, 7, 1, 5));
-        MappedList<String, Integer> mappedList = new MappedList<>(observableList, String::valueOf);
+        final ObservableList<Integer> observableList = FXCollections.observableArrayList(List.of(3, 7, 1, 5));
+        final MappedList<String, Integer> mappedList = new MappedList<>(observableList, String::valueOf);
 
-        List<String> actual = new ArrayList<>();
+        final List<String> actual = new ArrayList<>();
 
         Bindings.bindContent(actual, mappedList);
 
@@ -29,10 +29,10 @@ public class MappedListTest {
 
     @Test
     public void testListAdd() {
-        ObservableList<Integer> observableList = FXCollections.observableArrayList(List.of(3, 7, 1, 5));
-        MappedList<String, Integer> mappedList = new MappedList<>(observableList, String::valueOf);
+        final ObservableList<Integer> observableList = FXCollections.observableArrayList(List.of(3, 7, 1, 5));
+        final MappedList<String, Integer> mappedList = new MappedList<>(observableList, String::valueOf);
 
-        List<String> actual = new ArrayList<>();
+        final List<String> actual = new ArrayList<>();
 
         Bindings.bindContent(actual, mappedList);
 
@@ -47,10 +47,10 @@ public class MappedListTest {
 
     @Test
     public void testListRemove() {
-        ObservableList<Integer> observableList = FXCollections.observableArrayList(List.of(3, 7, 1, 5));
-        MappedList<String, Integer> mappedList = new MappedList<>(observableList, String::valueOf);
+        final ObservableList<Integer> observableList = FXCollections.observableArrayList(List.of(3, 7, 1, 5));
+        final MappedList<String, Integer> mappedList = new MappedList<>(observableList, String::valueOf);
 
-        List<String> actual = new ArrayList<>();
+        final List<String> actual = new ArrayList<>();
 
         Bindings.bindContent(actual, mappedList);
 
@@ -65,10 +65,10 @@ public class MappedListTest {
 
     @Test
     public void testListUpdate() {
-        ObservableList<Integer> observableList = FXCollections.observableArrayList(List.of(3, 7, 1, 5));
-        MappedList<String, Integer> mappedList = new MappedList<>(observableList, String::valueOf);
+        final ObservableList<Integer> observableList = FXCollections.observableArrayList(List.of(3, 7, 1, 5));
+        final MappedList<String, Integer> mappedList = new MappedList<>(observableList, String::valueOf);
 
-        List<String> actual = new ArrayList<>();
+        final List<String> actual = new ArrayList<>();
 
         Bindings.bindContent(actual, mappedList);
 
@@ -83,11 +83,11 @@ public class MappedListTest {
 
     @Test
     public void testListPermutation() {
-        SortedList<Integer> sortedList = FXCollections.observableArrayList(List.of(3, 7, 1, 5))
+        final SortedList<Integer> sortedList = FXCollections.observableArrayList(List.of(3, 7, 1, 5))
                 .sorted(Comparator.naturalOrder());
-        MappedList<String, Integer> mappedList = new MappedList<>(sortedList, String::valueOf);
+        final MappedList<String, Integer> mappedList = new MappedList<>(sortedList, String::valueOf);
 
-        List<String> actual = new ArrayList<>();
+        final List<String> actual = new ArrayList<>();
 
         Bindings.bindContent(actual, mappedList);
 
@@ -102,10 +102,10 @@ public class MappedListTest {
 
     @Test
     public void testMapperChange() {
-        ObservableList<Integer> observableList = FXCollections.observableArrayList(List.of(3, 7, 1, 5));
-        MappedList<String, Integer> mappedList = new MappedList<>(observableList, String::valueOf);
+        final ObservableList<Integer> observableList = FXCollections.observableArrayList(List.of(3, 7, 1, 5));
+        final MappedList<String, Integer> mappedList = new MappedList<>(observableList, String::valueOf);
 
-        List<String> actual = new ArrayList<>();
+        final List<String> actual = new ArrayList<>();
 
         Bindings.bindContent(actual, mappedList);
 
@@ -120,10 +120,10 @@ public class MappedListTest {
 
     @Test
     public void testMapperChangeToNull() {
-        ObservableList<Integer> observableList = FXCollections.observableArrayList(List.of(3, 7, 1, 5));
-        MappedList<String, Integer> mappedList = new MappedList<>(observableList, String::valueOf);
+        final ObservableList<Integer> observableList = FXCollections.observableArrayList(List.of(3, 7, 1, 5));
+        final MappedList<String, Integer> mappedList = new MappedList<>(observableList, String::valueOf);
 
-        List<String> actual = new ArrayList<>();
+        final List<String> actual = new ArrayList<>();
 
         Bindings.bindContent(actual, mappedList);
 
@@ -138,10 +138,10 @@ public class MappedListTest {
 
     @Test
     public void testMapperChangeFromNull() {
-        ObservableList<Integer> observableList = FXCollections.observableArrayList(List.of(3, 7, 1, 5));
-        MappedList<String, Integer> mappedList = new MappedList<>(observableList);
+        final ObservableList<Integer> observableList = FXCollections.observableArrayList(List.of(3, 7, 1, 5));
+        final MappedList<String, Integer> mappedList = new MappedList<>(observableList);
 
-        List<String> actual = new ArrayList<>();
+        final List<String> actual = new ArrayList<>();
 
         Bindings.bindContent(actual, mappedList);
 
