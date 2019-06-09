@@ -3,6 +3,7 @@ package org.phoenicis.javafx.collections;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.WeakListChangeListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -369,9 +370,12 @@ public class ConcatenatedList<E> extends TransformationListBase<E, ObservableLis
             endChange();
         };
 
-        innerListeners.add(innerListIndex, innerListener);
+        // wrap the inner listener in a weak listener to ensure a better memory management
+        final WeakListChangeListener<E> weakInnerListener = new WeakListChangeListener<>(innerListener);
 
-        innerList.addListener(innerListener);
+        innerListeners.add(innerListIndex, weakInnerListener);
+
+        innerList.addListener(weakInnerListener);
     }
 
     /**
