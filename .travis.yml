@@ -23,3 +23,7 @@ jobs:
       os: linux
       dist: trusty
       jdk: openjdk13
+    - stage: Build + test
+      name: OS X
+      os: osx
+      osx_image: xcode10.1
