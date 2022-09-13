@@ -31,7 +31,7 @@
         <logback.version>1.2.3</logback.version>
         <guava.version>27.0.1-jre</guava.version>
         <junit.version>4.13.1</junit.version>
-        <openjfx.version>15.0.1</openjfx.version>
+        <openjfx.version>19</openjfx.version>
     </properties>
 
     <dependencies>
